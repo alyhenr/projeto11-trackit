@@ -1,6 +1,10 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '../../App';
-import styled from 'styled-components'
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import axios from 'axios';
+
+import { BASE_URL } from '../../assets/apiURL';
 
 const SCForm = styled.form`
     display: flex;
@@ -35,15 +39,25 @@ const SCForm = styled.form`
     }
 `;
 
-const Form = () => {
-    const { isLogin } = useContext(AuthContext);
-    const [userData, setUserData] = useState({})
-    console.log(userData);
+const loginData = {
+    email: "",
+    password: "",
+};
 
-    const handleSubmit = (ev) => {
-        ev.preventDefault();
-        console.log(isLogin);
-    };
+const Form = ({ islogin }) => {
+    const [userData, setUserData] = useState({ ...loginData });
+    const [submitted, setSubmitted] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setUserData((islogin ? {
+            ...loginData
+        } : {
+            ...loginData,
+            name: "",
+            image: "",
+        }));
+    }, [islogin]);
 
     const handleChange = (ev) => {
         setUserData(prevState => ({
@@ -52,39 +66,68 @@ const Form = () => {
         }))
     };
 
+    const handleSubmit = (ev) => {
+        ev.preventDefault();
+        setSubmitted(true);
+
+        axios.post(BASE_URL + `${islogin ? "login" : "sign-up"}`, userData)
+            .then(() => {
+                if (islogin) { navigate("/hoje") } else {
+                    navigate("/");
+                    setSubmitted(false);
+                }
+            })
+            .catch(err => {
+                alert(`Ocorreu um problema no seu ${islogin ? "login" : "cadastro"}. Verifique o(s) seguinte(s) campo(s): ${err.response.data.details.map(detail => detail
+                    .match(/(email|password|name|image)/)[0])
+                    .join(", ")
+                    }`)
+                setSubmitted(false);
+            });
+
+    };
+
     return (
         <SCForm onSubmit={handleSubmit}>
             <input
                 type="email" name="email"
                 placeholder='email'
-                value={userData.email || ""}
+                value={userData.email}
                 onChange={handleChange}
+                disabled={submitted}
             />
             <input
                 type="password" name="password"
                 placeholder='senha'
-                value={userData.password || ""}
+                value={userData.password}
                 onChange={handleChange}
+                disabled={submitted}
             />
-            {!isLogin &&
+            {!islogin &&
                 <>
                     <input
                         type="text" name="name"
                         placeholder='nome'
                         value={userData.name || ""}
                         onChange={handleChange}
+                        disabled={submitted}
                     />
                     <input
                         type="text" name="image"
                         placeholder='foto'
                         value={userData.image || ""}
                         onChange={handleChange}
+                        disabled={submitted}
                     />
                 </>
             }
-            <button>{isLogin ? "Entrar" : "Cadastrar"}</button>
+            <button>{islogin ? "Entrar" : "Cadastrar"}</button>
         </SCForm>
     )
 }
+
+Form.propTypes = {
+    islogin: PropTypes.bool,
+};
 
 export default Form

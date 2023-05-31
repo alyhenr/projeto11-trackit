@@ -1,24 +1,16 @@
-import { Routes, Route } from "react-router-dom";
-import { createContext, useState } from "react";
+import { useRoutes } from "react-router-dom";
 
-import Auth from "./pages/Home/Auth";
-
-export const AuthContext = createContext(null);
+import Auth from './pages/Home/Auth';
 
 const App = () => {
-  const [isLogin, setIsLogin] = useState(true);
+
+  const AuthRoutes = useRoutes(["/", "/cadastro"].map(path => ({ path, element: <Auth /> })));
+
   return (
     <>
-      <AuthContext.Provider
-        value={{ isLogin, setIsLogin }}
-      >
-        <Routes>
-          <Route path="/" element={<Auth />} />
-          <Route path="/cadastro" element={<Auth />} />
-        </Routes>
-      </AuthContext.Provider>
+      {AuthRoutes}
     </>
   )
 }
 
-export default App
+export default App;

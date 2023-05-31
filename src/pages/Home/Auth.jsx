@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { AuthContext } from '../../App';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -21,12 +20,17 @@ const SCWrapper = styled.div`
 `;
 
 const Auth = () => {
-    const { isLogin, setIsLogin } = useContext(AuthContext);
+    const page = window.location.pathname;
+    const [isLogin, setIsLogin] = useState(true);
+
+    useEffect(() => {
+        setIsLogin(page === "/");
+    }, [page])
 
     return (
         <SCWrapper>
             <img src={logo} alt="logo" />
-            <Form />
+            <Form islogin={isLogin} setIsLogin={setIsLogin} />
             <Link
                 to={isLogin ? '/cadastro' : '/'}
                 onClick={() => setIsLogin(prevState => !prevState)}
