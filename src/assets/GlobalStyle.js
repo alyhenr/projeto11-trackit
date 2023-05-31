@@ -10,7 +10,7 @@ export default createGlobalStyle`
         font-style: normal;
         font-weight: 400;    
     }
-
+    
     a {
         text-decoration: none;
     }

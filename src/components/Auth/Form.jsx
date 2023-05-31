@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 
 import { BASE_URL } from '../../assets/apiURL';
+import { DataContext } from '../../App';
 
 const SCForm = styled.form`
     display: flex;
@@ -48,6 +49,7 @@ const Form = ({ islogin }) => {
     const [userData, setUserData] = useState({ ...loginData });
     const [submitted, setSubmitted] = useState(false);
     const navigate = useNavigate();
+    const { setUserInfo } = useContext(DataContext);
 
     useEffect(() => {
         setUserData((islogin ? {
@@ -71,8 +73,11 @@ const Form = ({ islogin }) => {
         setSubmitted(true);
 
         axios.post(BASE_URL + `${islogin ? "login" : "sign-up"}`, userData)
-            .then(() => {
-                if (islogin) { navigate("/hoje") } else {
+            .then(res => {
+                if (islogin) {
+                    navigate("/hoje");
+                    setUserInfo(res.data);
+                } else {
                     navigate("/");
                     setSubmitted(false);
                 }
@@ -130,4 +135,4 @@ Form.propTypes = {
     islogin: PropTypes.bool,
 };
 
-export default Form
+export default Form;
