@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ThreeDots } from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -10,7 +11,7 @@ import { DataContext } from '../../App';
 const SCForm = styled.form`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     gap: 10px;
 
@@ -25,7 +26,10 @@ const SCForm = styled.form`
         font-size: 20px;
     }
 
-    button {       
+    button {     
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 310px;
         height: 45px;       
 
@@ -77,7 +81,7 @@ const Form = ({ islogin }) => {
                 if (islogin) {
                     navigate("/hoje");
                     setUserInfo(res.data);
-                    // Saving the data locally, so the user keep logged in
+                    // Saving the data locally, so the user stay logged in
                     Object.keys(res.data).forEach(userData => {
                         localStorage.setItem(`${userData}-trackIt`, res.data[userData]);
                     })
@@ -98,17 +102,19 @@ const Form = ({ islogin }) => {
 
     return (
         <SCForm onSubmit={handleSubmit}>
-            <label htmlFor="email"></label>
+            <label htmlFor="email">Email: </label>
             <input
                 type="email" name="email"
+                id="email"
                 placeholder='email'
                 value={userData.email}
                 onChange={handleChange}
                 disabled={submitted}
             />
-            <label htmlFor="password"></label>
+            <label htmlFor="password">Senha: </label>
             <input
                 type="password" name="password"
+                id="password"
                 placeholder='senha'
                 value={userData.password}
                 onChange={handleChange}
@@ -116,17 +122,19 @@ const Form = ({ islogin }) => {
             />
             {!islogin &&
                 <>
-                    <label htmlFor="name"></label>
+                    <label htmlFor="name">Nome: </label>
                     <input
                         type="text" name="name"
+                        id="name"
                         placeholder='nome'
                         value={userData.name || ""}
                         onChange={handleChange}
                         disabled={submitted}
                     />
-                    <label htmlFor="image"></label>
+                    <label htmlFor="image">Foto de perfil: </label>
                     <input
                         type="text" name="image"
+                        id="image"
                         placeholder='foto'
                         value={userData.image || ""}
                         onChange={handleChange}
@@ -134,7 +142,19 @@ const Form = ({ islogin }) => {
                     />
                 </>
             }
-            <button>{islogin ? "Entrar" : "Cadastrar"}</button>
+            <button type='submit'>
+                {submitted ? <ThreeDots
+                    height="80"
+                    width="80"
+                    radius="9"
+                    color="#FFF"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true}
+                /> :
+                    islogin ? "Entrar" : "Cadastrar"}
+            </button>
         </SCForm>
     )
 }

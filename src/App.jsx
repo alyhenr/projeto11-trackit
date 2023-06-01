@@ -32,7 +32,7 @@ const App = () => {
           || window.location.pathname === "/hoje")) {
         navigate('/hoje');
       }
-    }
+    } else if (window.location.pathname !== "/") { navigate("/") }
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -33,8 +33,7 @@ const SCToday = styled.div`
         }
 
         h4 {
-            font-size: 18px;
-            color: #BABABA;
+            font-size: 18px;            
         }
     }
 
@@ -65,7 +64,7 @@ const SCToday = styled.div`
             color: #666666;
         }
 
-        h3 {
+        h3 {            
             font-size: 20px;
             font-weight: 500;
             margin-bottom: 10px;
@@ -109,11 +108,28 @@ const SCToday = styled.div`
 `;
 
 const date = new Date;
+const BRdays = {
+    'Sun': 'Domingo',
+    'Mon': 'Segunda',
+    'Tue': 'Terça',
+    'Wed': 'Quarta',
+    'Thu': 'Quinta',
+    'Fri': 'Sexta',
+    'Sat': 'Sábado',
+};
+
+const day = date.getDate() > 9 ? String(date.getDate()) : `0${date.getDate()}`;
+const month = date.getMonth() > 9 ? String(date.getMonth()) : `0${date.getMonth()}`;
 
 const Today = () => {
-    const { todayHabits } = useContext(HabitsContext);
+    const { todayHabits, doneHabits } = useContext(HabitsContext);
     const { userInfo, setUserInfo } = useContext(DataContext);
-    const [doneHabits] = useState(todayHabits.filter(habit => habit.done));
+    const [percentage, setPercentage] = useState(0);
+
+    useEffect(() => {
+        const perc = (doneHabits.length / todayHabits.length) * 100;
+        setPercentage(Number(perc.toFixed(0)));
+    }, [todayHabits, doneHabits]);
 
     const checkHabit = habit => {
         const url = !habit.done
@@ -134,11 +150,11 @@ const Today = () => {
                 <Header />
                 <SCToday>
                     <div className="info">
-                        <h2>{date.getDay()}</h2>
+                        <h2>{`${BRdays[String(date).slice(0, 3)]}, ${day}/${month}`}</h2>
                         <h4 style={{
-                            color: `${doneHabits.length && "#8FC549"}`
-                        }}>{todayHabits && doneHabits.length > 0 ?
-                            `${((doneHabits.length / todayHabits.length) * 100).toFixed(0)}% dos hábitos concluídos`
+                            color: `${percentage > 0 ? "#8FC549" : "#BABABA"}`
+                        }}>{percentage > 0
+                            ? `${percentage}% dos hábitos concluídos`
                             : "Nenhum hábito concluído ainda"}
                         </h4>
                     </div>
@@ -147,10 +163,18 @@ const Today = () => {
                             <li key={habit.id}>
                                 <h3>{habit.name}</h3>
                                 <h5>
-                                    Sequência atual: {habit.currentSequence}
+                                    Sequência atual: <span
+                                        style={{
+                                            color: `${habit.currentSequence > 0 ? "#8FC549" : "#666666"}`
+                                        }}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</span>
                                 </h5>
                                 <h5>
-                                    Seu recorde: {habit.highestSequence}
+                                    Seu recorde: <span
+                                        style={{
+                                            color: `${habit.highestSequence > 0
+                                                && habit.highestSequence === habit.currentSequence
+                                                ? "#8FC549" : "#666666"}`
+                                        }}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
                                 </h5>
                                 <div
                                     className=

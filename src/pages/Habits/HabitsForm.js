@@ -45,7 +45,11 @@ export default styled.div`
         justify-content: flex-end;
     }
 
-    .actions>button {        
+    .actions>button {     
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
         width: 90px;
         height: 35px;
         border-radius: 5px;

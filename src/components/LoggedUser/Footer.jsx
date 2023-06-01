@@ -1,5 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import styled from "styled-components";
+
+import '../../assets/stylesLoader.css';
+import { HabitsContext } from "./HabitsWrapper";
 
 const SCWrapper = styled.div`
     display: flex;
@@ -31,6 +36,8 @@ const SCWrapper = styled.div`
         width: 100px;
         height: 100px;
         
+        position: relative;
+
         border-radius: 50%;
         background: #52B6FF;
         border: none;
@@ -43,10 +50,25 @@ const SCWrapper = styled.div`
 `;
 
 const Footer = () => {
+    const { todayHabits, doneHabits } = useContext(HabitsContext);
+
     return (
         <SCWrapper>
             <Link to={"/habitos"}><h3>Hábitos</h3></Link>
-            <Link to={"/hoje"}><div>Hoje</div></Link>
+            <Link to={"/hoje"}>
+                <div>
+                    <CircularProgressbar
+                        value={
+                            Math.floor((doneHabits.length / todayHabits.length) * 100)
+                        }
+                        styles={buildStyles({
+                            pathColor: '#FFF',
+                            trailColor: 'transparent',
+                        })}
+                    />
+                    Hoje
+                </div>
+            </Link>
             <Link to={"/historico"}><h3>Histórico</h3></Link>
         </SCWrapper>
     )

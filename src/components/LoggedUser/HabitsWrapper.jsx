@@ -8,9 +8,10 @@ import { HABITS_LIST_URL, TODAY_URL } from "../../assets/apiURL";
 export const HabitsContext = createContext(null);
 
 const HabitsWrapper = ({ children }) => {
+    const { userInfo } = useContext(DataContext);
     const [habits, setHabits] = useState([]);
     const [todayHabits, setTodayHabits] = useState([]);
-    const { userInfo } = useContext(DataContext);
+    const [doneHabits, setDoneHabits] = useState([]);
 
     useEffect(() => {
         if (userInfo.token) {
@@ -28,12 +29,15 @@ const HabitsWrapper = ({ children }) => {
                 headers: {
                     "Authorization": `Bearer ${userInfo.token}`,
                 }
-            }).then(res => { setTodayHabits(res.data) })
+            }).then(res => {
+                setTodayHabits(res.data);
+                setDoneHabits(res.data.filter(habit => habit.done));
+            })
                 .catch(err => console.log(err));
         }
     }, [userInfo]);
 
-    return <HabitsContext.Provider value={{ habits, setHabits, todayHabits }}>
+    return <HabitsContext.Provider value={{ habits, setHabits, todayHabits, doneHabits }}>
         {children}
     </HabitsContext.Provider>
 };

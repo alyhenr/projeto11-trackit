@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 
 import { DataContext } from "../../App";
@@ -21,12 +22,14 @@ const Habits = () => {
     const [showForm, setShowForm] = useState(false);
     const [habitName, setHabitName] = useState("");
     const [selectedDays, setSelectedDays] = useState([]);
+    const [submitted, setSubmitted] = useState(false);
 
     const { habits, setHabits } = useContext(HabitsContext);
     const { userInfo, setUserInfo } = useContext(DataContext);
 
     const handleSubmit = ev => {
         ev.preventDefault();
+
         if (!selectedDays || !habitName) return;
         axios.post(CREATE_URL, {
             name: habitName,
@@ -104,8 +107,19 @@ const Habits = () => {
                     <button id="cancel" type="button"
                         onClick={() => setShowForm(false)}>Cancelar</button>
                     <button id="save" type="submit"
-                        onClick={handleSubmit}
-                    >Salvar</button>
+                        onClick={(ev) => { handleSubmit(ev); setSubmitted(true) }}
+                    >{submitted
+                        ? <ThreeDots
+                            height="35"
+                            width="80"
+                            radius="9"
+                            color="#FFF"
+                            ariaLabel="three-dots-loading"
+                            wrapperStyle={{}}
+                            wrapperClassName=""
+                            visible={true}
+                        />
+                        : "Salvar"}</button>
                 </div>
             </HabitsForm>}
             {habits.length === 0 ? <p style={{
