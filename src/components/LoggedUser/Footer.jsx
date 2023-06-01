@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SCWrapper = styled.div`
@@ -22,7 +23,10 @@ const SCWrapper = styled.div`
         color: #52B6FF;
     }
 
-    button {
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100px;
         height: 100px;
         
@@ -40,9 +44,9 @@ const SCWrapper = styled.div`
 const Footer = () => {
     return (
         <SCWrapper>
-            <h3>Hábitos</h3>
-            <button>Hoje</button>
-            <h3>Histórico</h3>
+            <Link to={"/habitos"}><h3>Hábitos</h3></Link>
+            <Link to={"/hoje"}><div>Hoje</div></Link>
+            <Link to={"/historico"}><h3>Histórico</h3></Link>
         </SCWrapper>
     )
 }

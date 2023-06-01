@@ -77,6 +77,10 @@ const Form = ({ islogin }) => {
                 if (islogin) {
                     navigate("/hoje");
                     setUserInfo(res.data);
+                    // Saving the data locally, so the user keep logged in
+                    Object.keys(res.data).forEach(userData => {
+                        localStorage.setItem(`${userData}-trackIt`, res.data[userData]);
+                    })
                 } else {
                     navigate("/");
                     setSubmitted(false);
@@ -94,6 +98,7 @@ const Form = ({ islogin }) => {
 
     return (
         <SCForm onSubmit={handleSubmit}>
+            <label htmlFor="email"></label>
             <input
                 type="email" name="email"
                 placeholder='email'
@@ -101,6 +106,7 @@ const Form = ({ islogin }) => {
                 onChange={handleChange}
                 disabled={submitted}
             />
+            <label htmlFor="password"></label>
             <input
                 type="password" name="password"
                 placeholder='senha'
@@ -110,6 +116,7 @@ const Form = ({ islogin }) => {
             />
             {!islogin &&
                 <>
+                    <label htmlFor="name"></label>
                     <input
                         type="text" name="name"
                         placeholder='nome'
@@ -117,6 +124,7 @@ const Form = ({ islogin }) => {
                         onChange={handleChange}
                         disabled={submitted}
                     />
+                    <label htmlFor="image"></label>
                     <input
                         type="text" name="image"
                         placeholder='foto'

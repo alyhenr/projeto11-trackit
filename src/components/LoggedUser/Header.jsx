@@ -21,6 +21,10 @@ const SCWrapper = styled.div`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);;
     padding: 10px 20px;
 
+    img {
+        cursor: pointer;
+    }
+
     #logo {
         width: 100px;
     }
@@ -34,10 +38,10 @@ const SCWrapper = styled.div`
 
 const Header = () => {
     const { userInfo } = useContext(DataContext);
-    console.log(userInfo);
+
     return (
         <SCWrapper>
-            <img src={TrackIt} alt="Logo" id="logo" />
+            <img src={TrackIt} alt="Logo" id="logo" onClick={() => window.location.reload()} />
             <img src={userInfo.image} alt="user-picture" id="profile-pic" />
         </SCWrapper>
     )

@@ -17,22 +17,34 @@ export default styled.div`
     background-color: #F2F2F2;
     padding: 20px 30px;
 
-    my-habits {
+    .my-habits {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 20px;
 
-        button {
-            position: absolute;
+        width: 100%;
+
+        button {            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             width: 40px;
             height: 35px;            
 
             background: #52B6FF;
-            border-radius: 4.63636px;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            font-weight: 500;
+            font-size: 30px;
+            text-align: center;
+            
+            cursor: pointer;
         }
 
-        h2 {
-            width: 150px;
+        h2 {         
             height: 30px;
             font-size: 24px;
 
