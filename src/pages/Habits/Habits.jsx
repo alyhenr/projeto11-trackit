@@ -23,7 +23,7 @@ const Habits = () => {
     const [selectedDays, setSelectedDays] = useState([]);
 
     const { habits, setHabits } = useContext(HabitsContext);
-    const { userInfo } = useContext(DataContext);
+    const { userInfo, setUserInfo } = useContext(DataContext);
 
     const handleSubmit = ev => {
         ev.preventDefault();
@@ -37,6 +37,10 @@ const Habits = () => {
                 setShowForm(false);
                 setHabitName("");
                 setSelectedDays([]);
+                setUserInfo(prevState => ({
+                    ...prevState,
+                    "updateNewHabit": {},
+                }));
             })
             .catch(err => console.log(err));
     }
@@ -44,7 +48,7 @@ const Habits = () => {
     const handleDeletion = (id) => {
         console.log("About to delete you my friend", id)
         const confirmation =
-            confirm("Tem certeza que deseja eliminar esse hábito da sua lista?");
+            confirm("Tem certeza que deseja deletar esse hábito da sua lista?");
 
         if (confirmation) {
             axios.delete(DELETE_URL(id), {
@@ -55,7 +59,13 @@ const Habits = () => {
                     headers:
                         { "Authorization": `Bearer ${userInfo.token}` }
                 })
-                    .then(res => setHabits(res.data))
+                    .then(res => {
+                        setHabits(res.data);
+                        setUserInfo(prevState => ({
+                            ...prevState,
+                            "updateNewHabit": {},
+                        }));
+                    })
                     .catch(err => console.log(err))
                 )
                 .catch(err => console.log(err));

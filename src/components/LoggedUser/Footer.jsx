@@ -17,6 +17,7 @@ const SCWrapper = styled.div`
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);;
     padding: 10px 50px;
+    border-top: 1px solid #DBDBDB;
 
     h3 {
         font-size: 18px;
