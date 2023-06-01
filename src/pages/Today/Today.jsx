@@ -1,10 +1,7 @@
-import { useContext, useEffect } from 'react';
-import axios from 'axios';
+import { useContext } from 'react';
 import styled from 'styled-components';
 
-import { DataContext } from '../../App';
 import { HabitsContext } from '../../components/LoggedUser/HabitsWrapper';
-import { TODAY_URL } from '../../assets/apiURL';
 import BodyWrapper from '../../assets/BodyWrapper';
 import Header from '../../components/LoggedUser/Header';
 import Footer from '../../components/LoggedUser/Footer';
@@ -52,20 +49,7 @@ const SCToday = styled.div`
 `;
 
 const Today = () => {
-    const { userInfo } = useContext(DataContext);
-    const { habits, setHabits } = useContext(HabitsContext);
-
-    useEffect(() => {
-        if (userInfo.token) {
-            axios.get(TODAY_URL, {
-                headers: {
-                    "Authorization": `Bearer ${userInfo.token}`
-                }
-            })
-                .then(res => { setHabits(res.data); })
-                .catch(err => console.log(err));
-        }
-    }, [userInfo.token]);
+    const { habits } = useContext(HabitsContext);
 
     return (
         <>
