@@ -8,3 +8,9 @@ export const CREATE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/tr
 
 export const DELETE_URL = id =>
     `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
+
+export const CHECK_HABIT_URL = id =>
+    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
+
+export const UNCHECK_HABIT_URL = id =>
+    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`;

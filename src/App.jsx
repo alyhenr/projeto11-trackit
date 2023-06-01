@@ -26,7 +26,7 @@ const App = () => {
 
       const userData = {};
       userDataArr.forEach(cleanedKey => { userData[cleanedKey] = localStorage.getItem(`${cleanedKey}-trackIt`) });
-      setUserInfo({ ...userData, "updateNewHabit": {} });
+      setUserInfo({ ...userData, "updateAppState": {} });
       if (userData.token
         && (window.location.pathname === "/"
           || window.location.pathname === "/hoje")) {

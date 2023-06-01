@@ -1,7 +1,10 @@
 import { useContext, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 
+import { DataContext } from '../../App';
 import { HabitsContext } from '../../components/LoggedUser/HabitsWrapper';
+import { CHECK_HABIT_URL, UNCHECK_HABIT_URL } from '../../assets/apiURL';
 import BodyWrapper from '../../assets/BodyWrapper';
 import Header from '../../components/LoggedUser/Header';
 import Footer from '../../components/LoggedUser/Footer';
@@ -109,15 +112,20 @@ const date = new Date;
 
 const Today = () => {
     const { todayHabits } = useContext(HabitsContext);
-    const [doneHabits, setDoneHabits] = useState([]);
+    const { userInfo, setUserInfo } = useContext(DataContext);
+    const [doneHabits] = useState(todayHabits.filter(habit => habit.done));
 
-    const checkHabit = (habit) => {
-        if (doneHabits.includes(habit)) {
-            setDoneHabits(prevState => prevState
-                .filter(item => item !== habit));
-        } else {
-            setDoneHabits(prevState => [...prevState, habit]);
-        }
+    const checkHabit = habit => {
+        const url = !habit.done
+            ? CHECK_HABIT_URL(habit.id)
+            : UNCHECK_HABIT_URL(habit.id);
+
+        axios.post(url, {}, {
+            headers:
+                { "Authorization": `Bearer ${userInfo.token}` }
+        }).then(() => {
+            setUserInfo(prevState => ({ ...prevState, "updateAppState": {} }));
+        }).catch(err => console.log(err));
     };
 
     return (
@@ -136,7 +144,7 @@ const Today = () => {
                     </div>
                     <ul className="habits__list">
                         {todayHabits.length > 0 ? todayHabits.map(habit => (
-                            <li key={habit.name}>
+                            <li key={habit.id}>
                                 <h3>{habit.name}</h3>
                                 <h5>
                                     Sequência atual: {habit.currentSequence}
@@ -146,8 +154,8 @@ const Today = () => {
                                 </h5>
                                 <div
                                     className=
-                                    {`${doneHabits.includes(habit.name) ? "done" : ""}`}
-                                    onClick={() => checkHabit(habit.name)}
+                                    {`${habit.done ? "done" : ""}`}
+                                    onClick={() => checkHabit(habit)}
                                 >
                                     <img src={checkIcon} alt="check icon" />
                                 </div>

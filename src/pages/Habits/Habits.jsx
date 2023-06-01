@@ -63,7 +63,7 @@ const Habits = () => {
                         setHabits(res.data);
                         setUserInfo(prevState => ({
                             ...prevState,
-                            "updateNewHabit": {},
+                            "updateAppState": {},
                         }));
                     })
                     .catch(err => console.log(err))
