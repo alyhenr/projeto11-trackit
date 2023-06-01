@@ -17,9 +17,7 @@ const HabitsWrapper = ({ children }) => {
                 headers: {
                     "Authorization": `Bearer ${userInfo.token}`,
                 }
-            }).then(res => {
-                setHabits(res.data)
-            }).catch(err => console.log(err));
+            }).then(res => { setHabits(res.data) }).catch(err => console.log(err));
         }
     }, [userInfo]);
 

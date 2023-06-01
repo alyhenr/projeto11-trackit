@@ -5,3 +5,6 @@ export const TODAY_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/tra
 export const HABITS_LIST_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
 export const CREATE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+
+export const DELETE_URL = id =>
+    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;

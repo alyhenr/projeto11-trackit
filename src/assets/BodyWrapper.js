@@ -9,13 +9,14 @@ export default styled.div`
     gap: 30px;
 
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
 
     margin-top: 80px;
     margin-bottom: 70px;
 
     background-color: #F2F2F2;
-    padding: 20px 30px;
+    padding: 20px 30px 70px;
 
     .my-habits {
         display: flex;

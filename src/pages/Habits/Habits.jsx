@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 
-import { CREATE_URL } from "../../assets/apiURL";
 import { DataContext } from "../../App";
 import { HabitsContext } from "../../components/LoggedUser/HabitsWrapper";
+import { CREATE_URL } from "../../assets/apiURL";
+import { DELETE_URL } from "../../assets/apiURL";
+import { HABITS_LIST_URL } from "../../assets/apiURL";
 import BodyWrapper from "../../assets/BodyWrapper";
 import Header from "../../components/LoggedUser/Header";
 import Footer from "../../components/LoggedUser/Footer";
@@ -25,7 +27,7 @@ const Habits = () => {
 
     const handleSubmit = ev => {
         ev.preventDefault();
-
+        if (!selectedDays || !habitName) return;
         axios.post(CREATE_URL, {
             name: habitName,
             days: selectedDays.sort((a, b) => a - b)
@@ -38,7 +40,28 @@ const Habits = () => {
             })
             .catch(err => console.log(err));
     }
-    console.log(habits);
+
+    const handleDeletion = (id) => {
+        console.log("About to delete you my friend", id)
+        const confirmation =
+            confirm("Tem certeza que deseja eliminar esse hábito da sua lista?");
+
+        if (confirmation) {
+            axios.delete(DELETE_URL(id), {
+                headers:
+                    { "Authorization": `Bearer ${userInfo.token}` }
+            })
+                .then(() => axios.get(HABITS_LIST_URL, {
+                    headers:
+                        { "Authorization": `Bearer ${userInfo.token}` }
+                })
+                    .then(res => setHabits(res.data))
+                    .catch(err => console.log(err))
+                )
+                .catch(err => console.log(err));
+        } else { return; }
+    };
+
     return (
         <BodyWrapper>
             <Header />
@@ -68,7 +91,8 @@ const Habits = () => {
                     ))}
                 </div>
                 <div className="actions">
-                    <button id="cancel">Cancelar</button>
+                    <button id="cancel" type="button"
+                        onClick={() => setShowForm(false)}>Cancelar</button>
                     <button id="save" type="submit"
                         onClick={handleSubmit}
                     >Salvar</button>
@@ -94,7 +118,11 @@ const Habits = () => {
                                 </HabitDay>
                             ))}
                         </div>
-                        <img src={trashIcon} alt="trash icon" />
+                        <img
+                            src={trashIcon}
+                            alt="trash icon"
+                            onClick={() => handleDeletion(habit.id)}
+                        />
                     </HabitsList>
                 ))}
             <Footer />
