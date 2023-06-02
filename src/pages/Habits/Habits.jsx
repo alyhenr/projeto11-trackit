@@ -29,6 +29,13 @@ const Habits = () => {
 
     const handleSubmit = ev => {
         ev.preventDefault();
+        setSubmitted(true);
+
+        if (!habitName) {
+            alert("O seu novo hábito deve conter um nome!");
+            setSubmitted(false);
+            return;
+        }
 
         if (!selectedDays || !habitName) return;
         axios.post(CREATE_URL, {
@@ -44,6 +51,7 @@ const Habits = () => {
                     ...prevState,
                     "updateNewHabit": {},
                 }));
+                setSubmitted(false);
             })
             .catch(err => console.log(err));
     }
@@ -85,6 +93,7 @@ const Habits = () => {
             </div>
             {showForm && <HabitsForm data-test="habit-create-container">
                 <input
+                    disabled={submitted}
                     data-test="habit-name-input"
                     type="text"
                     placeholder="nome do hábito"
@@ -94,6 +103,7 @@ const Habits = () => {
                 <div className="days">
                     {weekDays.map((day, index) => (
                         <HabitDay
+                            disabled={submitted}
                             data-test="habit-day"
                             selected={selectedDays.includes(days[index])}
                             onClick={() => {
@@ -108,11 +118,13 @@ const Habits = () => {
                 </div>
                 <div className="actions">
                     <button data-test="habit-create-cancel-btn"
+                        disabled={submitted}
                         id="cancel" type="button"
                         onClick={() => setShowForm(false)}>Cancelar</button>
                     <button data-test="habit-create-save-btn"
+                        disabled={submitted}
                         id="save" type="submit"
-                        onClick={(ev) => { handleSubmit(ev); setSubmitted(true) }}
+                        onClick={(ev) => { handleSubmit(ev) }}
                     >{submitted
                         ? <ThreeDots
                             height="35"

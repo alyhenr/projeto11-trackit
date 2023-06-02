@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import TrackIt from '../../assets/TrackIt.png';
@@ -38,10 +39,11 @@ const SCWrapper = styled.div`
 
 const Header = () => {
     const { userInfo } = useContext(DataContext);
+    const navigate = useNavigate();
 
     return (
         <SCWrapper data-test="header">
-            <img src={TrackIt} alt="Logo" id="logo" onClick={() => window.location.reload()} />
+            <img src={TrackIt} alt="Logo" id="logo" onClick={() => navigate('/hoje')} />
             <img
                 data-test="avatar"
                 src={userInfo.image}

@@ -91,10 +91,14 @@ const Form = ({ islogin }) => {
                 }
             })
             .catch(err => {
-                alert(`Ocorreu um problema no seu ${islogin ? "login" : "cadastro"}. Verifique o(s) seguinte(s) campo(s): ${err.response.data.details.map(detail => detail
-                    .match(/(email|password|name|image)/)[0])
-                    .join(", ")
-                    }`)
+                if (err.response.status === 401) {
+                    alert(err.response.data.message);
+                } else if (err.response.status === 422) {
+                    alert(`Ocorreu um problema no seu ${islogin ? "login" : "cadastro"}. Verifique o(s) seguinte(s) campo(s): ${err.response.data.details.map(detail => detail
+                        .match(/(email|password|name|image)/)[0])
+                        .join(", ")
+                        }`)
+                }
                 setSubmitted(false);
             });
 
@@ -146,7 +150,9 @@ const Form = ({ islogin }) => {
                     />
                 </>
             }
-            <button type='submit' data-test={islogin ? "login-btn" : "signup-btn"}>
+            <button data-test={islogin ? "login-btn" : "signup-btn"}
+                disabled={submitted} type='submit'
+            >
                 {submitted ? <ThreeDots
                     height="80"
                     width="80"
