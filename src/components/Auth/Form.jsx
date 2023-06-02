@@ -98,6 +98,10 @@ const Form = ({ islogin }) => {
                         .match(/(email|password|name|image)/)[0])
                         .join(", ")
                         }`)
+                } else if (err.response.status === 409) {
+                    alert(err.response.data.message);
+                } else {
+                    alert("Ocorreu um erro ao realizar seu cadastro, tente novamente em alguns instantes");
                 }
                 setSubmitted(false);
             });

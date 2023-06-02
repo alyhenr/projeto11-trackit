@@ -120,7 +120,7 @@ const BRdays = {
 };
 
 const day = date.getDate() > 9 ? String(date.getDate()) : `0${date.getDate()}`;
-const month = date.getMonth() > 9 ? String(date.getMonth()) : `0${date.getMonth()}`;
+const month = date.getMonth() + 1 > 9 ? String(date.getMonth() + 1) : `0${date.getMonth() + 1}`;
 
 const Today = () => {
     const { todayHabits, doneHabits } = useContext(HabitsContext);
@@ -176,7 +176,7 @@ const Today = () => {
                                         style={{
                                             color: `${habit.highestSequence > 0
                                                 && habit.highestSequence === habit.currentSequence
-                                                ? "#8FC549" : "#666666"}`
+                                                ? "#8FC549" : "#grey"}`
                                         }}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
                                 </h5>
                                 <button
