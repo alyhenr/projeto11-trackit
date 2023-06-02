@@ -32,6 +32,7 @@ const Auth = () => {
             <img src={logo} alt="logo" />
             <Form islogin={isLogin} setIsLogin={setIsLogin} />
             <Link
+                data-test={isLogin ? "signup-link" : "login-link"}
                 to={isLogin ? '/cadastro' : '/'}
                 onClick={() => setIsLogin(prevState => !prevState)}
             >{isLogin ? "Não tem uma conta? Cadastre-se!" : "Já tem uma conta? Faça login!"}</Link>

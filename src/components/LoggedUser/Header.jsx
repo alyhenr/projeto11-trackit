@@ -40,9 +40,14 @@ const Header = () => {
     const { userInfo } = useContext(DataContext);
 
     return (
-        <SCWrapper>
+        <SCWrapper data-test="header">
             <img src={TrackIt} alt="Logo" id="logo" onClick={() => window.location.reload()} />
-            <img src={userInfo.image} alt="user-picture" id="profile-pic" />
+            <img
+                data-test="avatar"
+                src={userInfo.image}
+                alt="user-picture"
+                id="profile-pic"
+            />
         </SCWrapper>
     )
 };

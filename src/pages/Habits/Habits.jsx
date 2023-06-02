@@ -80,18 +80,21 @@ const Habits = () => {
             <Header />
             <div className="my-habits">
                 <h2>Meus hábitos</h2>
-                <button onClick={() => setShowForm(true)}>+</button>
+                <button data-test="habit-create-btn"
+                    onClick={() => setShowForm(true)}>+</button>
             </div>
-            {showForm && <HabitsForm>
+            {showForm && <HabitsForm data-test="habit-create-container">
                 <input
+                    data-test="habit-name-input"
                     type="text"
-                    placeholder="Nome do hábito"
+                    placeholder="nome do hábito"
                     value={habitName}
                     onChange={(ev) => setHabitName(ev.target.value)}
                 />
                 <div className="days">
                     {weekDays.map((day, index) => (
                         <HabitDay
+                            data-test="habit-day"
                             selected={selectedDays.includes(days[index])}
                             onClick={() => {
                                 setSelectedDays(prevState => prevState.includes(days[index])
@@ -104,9 +107,11 @@ const Habits = () => {
                     ))}
                 </div>
                 <div className="actions">
-                    <button id="cancel" type="button"
+                    <button data-test="habit-create-cancel-btn"
+                        id="cancel" type="button"
                         onClick={() => setShowForm(false)}>Cancelar</button>
-                    <button id="save" type="submit"
+                    <button data-test="habit-create-save-btn"
+                        id="save" type="submit"
                         onClick={(ev) => { handleSubmit(ev); setSubmitted(true) }}
                     >{submitted
                         ? <ThreeDots
@@ -130,11 +135,13 @@ const Habits = () => {
                 Adicione um hábito para começar a trackear!
             </p>
                 : habits.map(habit => (
-                    <HabitsList key={habit.id}>
-                        <h3>{habit.name}</h3>
+                    <HabitsList data-test="habit-container" key={habit.id}>
+                        <h3 data-test="habit-name"
+                        >{habit.name}</h3>
                         <div className="days">
                             {weekDays.map((day, i) => (
                                 <HabitDay
+                                    data-test="habit-day"
                                     key={days[i]}
                                     selected={habit.days && habit.days.includes(days[i])}
                                 >
@@ -143,6 +150,7 @@ const Habits = () => {
                             ))}
                         </div>
                         <img
+                            data-test="habit-delete-btn"
                             src={trashIcon}
                             alt="trash icon"
                             onClick={() => handleDeletion(habit.id)}

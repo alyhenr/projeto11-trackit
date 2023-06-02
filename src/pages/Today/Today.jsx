@@ -74,7 +74,7 @@ const SCToday = styled.div`
             font-size: 16px;
         }
 
-        div {
+        button {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -90,6 +90,7 @@ const SCToday = styled.div`
             
             border-radius: 10px;
             background-color: #EBEBEB;
+            border: none;
 
             cursor: pointer;
         }
@@ -150,25 +151,27 @@ const Today = () => {
                 <Header />
                 <SCToday>
                     <div className="info">
-                        <h2>{`${BRdays[String(date).slice(0, 3)]}, ${day}/${month}`}</h2>
-                        <h4 style={{
-                            color: `${percentage > 0 ? "#8FC549" : "#BABABA"}`
-                        }}>{percentage > 0
-                            ? `${percentage}% dos hábitos concluídos`
-                            : "Nenhum hábito concluído ainda"}
+                        <h2 data-test="today"
+                        >{`${BRdays[String(date).slice(0, 3)]}, ${day}/${month}`}</h2>
+                        <h4 data-test="today-counter"
+                            style={{
+                                color: `${percentage > 0 ? "#8FC549" : "#BABABA"}`
+                            }}>{percentage > 0
+                                ? `${percentage}% dos hábitos concluídos`
+                                : "Nenhum hábito concluído ainda"}
                         </h4>
                     </div>
                     <ul className="habits__list">
                         {todayHabits.length > 0 ? todayHabits.map(habit => (
-                            <li key={habit.id}>
-                                <h3>{habit.name}</h3>
-                                <h5>
+                            <li data-test="today-habit-container" key={habit.id}>
+                                <h3 data-test="today-habit-name">{habit.name}</h3>
+                                <h5 data-test="today-habit-sequence">
                                     Sequência atual: <span
                                         style={{
                                             color: `${habit.currentSequence > 0 ? "#8FC549" : "#666666"}`
                                         }}>{habit.currentSequence} {habit.currentSequence > 1 ? "dias" : "dia"}</span>
                                 </h5>
-                                <h5>
+                                <h5 data-test="today-habit-record">
                                     Seu recorde: <span
                                         style={{
                                             color: `${habit.highestSequence > 0
@@ -176,13 +179,14 @@ const Today = () => {
                                                 ? "#8FC549" : "#666666"}`
                                         }}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
                                 </h5>
-                                <div
+                                <button
+                                    data-test="today-habit-check-btn"
                                     className=
                                     {`${habit.done ? "done" : ""}`}
                                     onClick={() => checkHabit(habit)}
                                 >
                                     <img src={checkIcon} alt="check icon" />
-                                </div>
+                                </button>
                             </li>
                         )) : <h1>Você não adicionou nenhum hábito ainda...</h1>}
                     </ul>

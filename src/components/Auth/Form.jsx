@@ -104,6 +104,7 @@ const Form = ({ islogin }) => {
         <SCForm onSubmit={handleSubmit}>
             <label htmlFor="email">Email: </label>
             <input
+                data-test="email-input"
                 type="email" name="email"
                 id="email"
                 placeholder='email'
@@ -113,6 +114,7 @@ const Form = ({ islogin }) => {
             />
             <label htmlFor="password">Senha: </label>
             <input
+                data-test="password-input"
                 type="password" name="password"
                 id="password"
                 placeholder='senha'
@@ -124,6 +126,7 @@ const Form = ({ islogin }) => {
                 <>
                     <label htmlFor="name">Nome: </label>
                     <input
+                        data-test="user-name-input"
                         type="text" name="name"
                         id="name"
                         placeholder='nome'
@@ -133,6 +136,7 @@ const Form = ({ islogin }) => {
                     />
                     <label htmlFor="image">Foto de perfil: </label>
                     <input
+                        data-test="user-image-input"
                         type="text" name="image"
                         id="image"
                         placeholder='foto'
@@ -142,7 +146,7 @@ const Form = ({ islogin }) => {
                     />
                 </>
             }
-            <button type='submit'>
+            <button type='submit' data-test={islogin ? "login-btn" : "signup-btn"}>
                 {submitted ? <ThreeDots
                     height="80"
                     width="80"

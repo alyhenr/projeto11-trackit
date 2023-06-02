@@ -14,3 +14,5 @@ export const CHECK_HABIT_URL = id =>
 
 export const UNCHECK_HABIT_URL = id =>
     `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`;
+
+export const HISTORY_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily";

@@ -53,9 +53,13 @@ const Footer = () => {
     const { todayHabits, doneHabits } = useContext(HabitsContext);
 
     return (
-        <SCWrapper>
-            <Link to={"/habitos"}><h3>Hábitos</h3></Link>
-            <Link to={"/hoje"}>
+        <SCWrapper data-test="menu">
+            <Link
+                data-test="habit-link"
+                to={"/habitos"}><h3>Hábitos</h3></Link>
+            <Link
+                data-test="today-link"
+                to={"/hoje"}>
                 <div>
                     <CircularProgressbar
                         value={
@@ -69,7 +73,9 @@ const Footer = () => {
                     Hoje
                 </div>
             </Link>
-            <Link to={"/historico"}><h3>Histórico</h3></Link>
+            <Link
+                data-test="history-link"
+                to={"/historico"}><h3>Histórico</h3></Link>
         </SCWrapper>
     )
 }
