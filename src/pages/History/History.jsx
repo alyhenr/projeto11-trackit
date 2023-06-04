@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 import { DataContext } from '../../App';
 import { HISTORY_URL } from '../../assets/apiURL';
+import xMark from '../../assets/xMark.png';
+import checkMark from '../../assets/checkMark.png';
 import BodyWrapper from '../../assets/BodyWrapper';
 import Header from '../../components/LoggedUser/Header';
 import Footer from '../../components/LoggedUser/Footer';
@@ -24,37 +26,73 @@ const SCHistory = styled.div`
         color: #126BA5;
     }
 
-    .react-calendar {
-        border-radius: 15px;
+    .calendar__container {
+        display: flex;
+        justify-content: space-around;
+        gap: 50px;
+
+        .day-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 30px;
+
+            width: 500px;
+            height: fit-content;
+
+            padding: 20px;
+            background-color: #FFF;
+            border-radius: 15px;
+            border: 1px solid #A0A096;
+        }
+        .habit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            width: 100%;
+            padding-left: 10px;
+
+            .img__container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+
+                img {
+                    background-color: transparent;
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
     }
 
-    button {   
-        border-radius: 50%;      
-        font-size: 20px;        
-    }
+    .calendar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: fit-content;
+        height: auto;
+
+        border-radius: 20px;
+        button {
+            border-radius: 5px;
+            font-size: 20px;
+        }
 
     .all-done {
-        background: #8FC549;    
+        background: #8FC549;
     }
 
     .not-all-done {
         background: #ea5766;
     }
-
-    .day-details {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 40px;
-
-        width: 500px;
-        height: fit-content;
-
-        padding: 20px;
-        background-color: #FFF;
-        border-radius: 15px;
-    }
+}
 `;
 
 const CurrDate = new Date;
@@ -80,7 +118,7 @@ const History = () => {
     }, [userInfo]);
 
     const getMonthNumberFromName = monthName => {
-        return new Date(`${monthName} 1, 2022`).getMonth() + 1;
+        return new Date(`${monthName} 1, 2023`).getMonth() + 1;
     }
 
     const formatedDate = date => {
@@ -123,23 +161,29 @@ const History = () => {
             <Header />
             <SCHistory>
                 <h2>Histórico</h2>
-                <div data-test="calendar">
+                <div className='calendar__container'>
                     {habitsHistory.length > 0 && <Calendar
+                        className='calendar'
                         locale='pt-BR'
                         tileClassName={styleDays}
                         onClickDay={showDayInfo}
                     />}
+                    {showDetails.display && <div className="day-details">
+                        {showDetails.details.habits.map(habit => (
+                            <ul className="habit" key={habit.id}>
+                                <li>
+                                    <h1> {habit.name}</h1>
+                                    <h3 style={{
+                                        color: `${habit.done ? '#8FC549' : '#ea5766'}`
+                                    }}>{habit.done ? "Feito!" : "Não feito!"}</h3>
+                                </li>
+                                <div className='img__container'>
+                                    <img src={habit.done ? checkMark : xMark} alt={`${habit.done ? 'check' : 'x'} mark`} />
+                                </div>
+                            </ul>
+                        ))}
+                    </div>}
                 </div>
-                {showDetails.display && <div className='day-details'>
-                    {showDetails.details.habits.map(habit => (
-                        <div className="habit" key={habit.id}>
-                            <div>
-                                <h1>{habit.name}</h1>
-                                <h3>{habit.done ? "Feito!" : "Não feito!"}</h3>
-                            </div>
-                        </div>
-                    ))}
-                </div>}
             </SCHistory>
             <Footer />
         </BodyWrapper>

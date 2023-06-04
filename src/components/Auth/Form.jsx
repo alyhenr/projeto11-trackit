@@ -15,7 +15,7 @@ const SCForm = styled.form`
     justify-content: flex-start;
     gap: 10px;
 
-    input {        
+    input {
         width: 310px;
         height: 45px;
 
@@ -26,12 +26,12 @@ const SCForm = styled.form`
         font-size: 20px;
     }
 
-    button {     
+    button {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 310px;
-        height: 45px;       
+        height: 45px;
 
         background: #52B6FF;
         border-radius: 7px;
@@ -50,10 +50,10 @@ const loginData = {
 };
 
 const Form = ({ islogin }) => {
+    const { setUserInfo } = useContext(DataContext);
     const [userData, setUserData] = useState({ ...loginData });
     const [submitted, setSubmitted] = useState(false);
     const navigate = useNavigate();
-    const { setUserInfo } = useContext(DataContext);
 
     useEffect(() => {
         setUserData((islogin ? {
@@ -82,9 +82,7 @@ const Form = ({ islogin }) => {
                     navigate("/hoje");
                     setUserInfo(res.data);
                     // Saving the data locally, so the user stay logged in
-                    Object.keys(res.data).forEach(userData => {
-                        localStorage.setItem(`${userData}-trackIt`, res.data[userData]);
-                    })
+                    localStorage.setItem("trackIt_userdata", JSON.stringify(res.data));
                 } else {
                     navigate("/");
                     setSubmitted(false);

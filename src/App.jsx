@@ -14,21 +14,12 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (Object.keys({ ...localStorage }).length) {
-      // The data from the user was saved in a specif way (adding the -trackIt identifier) so that
-      // with there's more local data stored it will not be added to the user info that this app handles,
-      // consequently, when retrieving the data from the local storage, it's possible to filter only the data needed,
-      // which now is easy, since the indentifier was added, but we need to convert the keys name to the format 
-      // asked by the API:
-      const userDataArr = Object.keys({ ...localStorage })
-        .filter(key => key.includes("trackIt"))
-        .map(key => key.split("-")[0])
-
-      const userData = {};
-      userDataArr.forEach(cleanedKey => { userData[cleanedKey] = localStorage.getItem(`${cleanedKey}-trackIt`) });
-      setUserInfo({ ...userData, "updateAppState": {} });
-      if (userData.token
-        && (window.location.pathname === "/"
+    const loggedUser = localStorage.getItem('trackIt_userdata');
+    if (loggedUser) {
+      setUserInfo(JSON.parse(loggedUser));
+      //Check if the user was alreay logged in and redirect to /hoje page
+      if (loggedUser.token
+        && (window.location.pathname === "/" || window.location.pathname === "/cadastro"
           || window.location.pathname === "/hoje")) {
         navigate('/hoje');
       }

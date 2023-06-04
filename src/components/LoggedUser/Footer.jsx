@@ -35,7 +35,7 @@ const SCWrapper = styled.div`
         justify-content: center;
         width: 100px;
         height: 100px;
-        
+
         position: relative;
 
         border-radius: 50%;
@@ -63,6 +63,7 @@ const Footer = () => {
                 <div>
                     <CircularProgressbar
                         value={
+                            doneHabits.length &&
                             Math.floor((doneHabits.length / todayHabits.length) * 100)
                         }
                         styles={buildStyles({
