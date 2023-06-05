@@ -69,7 +69,7 @@ const Form = ({ islogin }) => {
         setUserData(prevState => ({
             ...prevState,
             [ev.target.name]: ev.target.value,
-        }))
+        }));
     };
 
     const handleSubmit = (ev) => {
@@ -95,7 +95,7 @@ const Form = ({ islogin }) => {
                     alert(`Ocorreu um problema no seu ${islogin ? "login" : "cadastro"}. Verifique o(s) seguinte(s) campo(s): ${err.response.data.details.map(detail => detail
                         .match(/(email|password|name|image)/)[0])
                         .join(", ")
-                        }`)
+                        }`);
                 } else if (err.response.status === 409) {
                     alert(err.response.data.message);
                 } else {

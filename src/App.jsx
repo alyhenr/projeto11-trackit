@@ -22,7 +22,9 @@ const App = () => {
         && (window.location.pathname === "/" || window.location.pathname === "/cadastro")) {
         navigate('/hoje');
       }
-    } else if (window.location.pathname !== "/" && window.location.pathname !== "/cadastro") { navigate("/") }
+    } else if (window.location.pathname !== "/" && window.location.pathname !== "/cadastro") {
+      navigate("/");
+    }
   }, []);
 
   return (

@@ -25,7 +25,7 @@ const Auth = () => {
 
     useEffect(() => {
         setIsLogin(page === "/");
-    }, [page])
+    }, [page]);
 
     return (
         <SCWrapper>

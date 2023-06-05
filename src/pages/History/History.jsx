@@ -112,8 +112,10 @@ const History = () => {
                 headers: {
                     "Authorization": `Bearer ${userInfo.token}`,
                 }
-            }).then(res => { setHabitsHistory(res.data); setDays(res.data.map(data => data.day)) })
-                .catch(err => console.log(err));
+            }).then(res => {
+                setHabitsHistory(res.data);
+                setDays(res.data.map(data => data.day));
+            }).catch(err => console.log(err));
         }
     }, [userInfo]);
 
@@ -138,7 +140,7 @@ const History = () => {
             if (dayInfo.habits.length
                 === dayInfo.habits.filter(habit => habit.done).length) {
                 return "all-done";
-            } else { return "not-all-done" }
+            } else { return "not-all-done"; }
         }
     };
 

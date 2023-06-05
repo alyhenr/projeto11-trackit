@@ -53,7 +53,7 @@ const Habits = () => {
                 setSubmitted(false);
             })
             .catch(err => console.log(err));
-    }
+    };
 
     const handleDeletion = (id) => {
         const confirmation =
@@ -122,7 +122,7 @@ const Habits = () => {
                     <button data-test="habit-create-save-btn"
                         disabled={submitted}
                         id="save" type="submit"
-                        onClick={(ev) => { handleSubmit(ev) }}
+                        onClick={(ev) => { handleSubmit(ev); }}
                     >{submitted
                         ? <ThreeDots
                             height="35"
@@ -169,7 +169,7 @@ const Habits = () => {
                 ))}
             <Footer />
         </BodyWrapper>
-    )
-}
+    );
+};
 
-export default Habits
+export default Habits;
