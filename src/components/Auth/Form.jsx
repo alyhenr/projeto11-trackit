@@ -168,8 +168,8 @@ const Form = ({ islogin }) => {
                     islogin ? "Entrar" : "Cadastrar"}
             </button>
         </SCForm>
-    )
-}
+    );
+};
 
 Form.propTypes = {
     islogin: PropTypes.bool,

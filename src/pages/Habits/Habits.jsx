@@ -15,7 +15,7 @@ import HabitDay from "./HabitDay";
 import HabitsList from "./HabitsList";
 import trashIcon from "../../assets/trash-icon.png";
 
-const days = Array(7).fill().map((_, i) => i === 0 ? 7 : i);
+const days = Array(7).fill().map((_, i) => i);
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
 const Habits = () => {
@@ -37,7 +37,6 @@ const Habits = () => {
             return;
         }
 
-        if (!selectedDays || !habitName) return;
         axios.post(CREATE_URL, {
             name: habitName,
             days: selectedDays.sort((a, b) => a - b)
@@ -57,7 +56,6 @@ const Habits = () => {
     }
 
     const handleDeletion = (id) => {
-        console.log("About to delete you my friend", id)
         const confirmation =
             confirm("Tem certeza que deseja deletar esse hábito da sua lista?");
 

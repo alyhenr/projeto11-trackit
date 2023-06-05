@@ -119,7 +119,7 @@ const History = () => {
 
     const getMonthNumberFromName = monthName => {
         return new Date(`${monthName} 1, 2023`).getMonth() + 1;
-    }
+    };
 
     const formatedDate = date => {
         const day = date.toString().split(' ')[2];
@@ -127,7 +127,7 @@ const History = () => {
         const year = CurrDate.getFullYear();
 
         return `${day}/${month > 9 ? month : `0${month}`}/${year}`;
-    }
+    };
 
     const styleDays = ({ date }) => {
         const day = formatedDate(date);
@@ -187,7 +187,7 @@ const History = () => {
             </SCHistory>
             <Footer />
         </BodyWrapper>
-    )
-}
+    );
+};
 
-export default History
+export default History;

@@ -78,7 +78,7 @@ const Footer = () => {
                 data-test="history-link"
                 to={"/historico"}><h3>Histórico</h3></Link>
         </SCWrapper>
-    )
-}
+    );
+};
 
-export default Footer
+export default Footer;

@@ -17,7 +17,7 @@ export default styled.div`
     input {
         max-width: 700px;
         width: 90%;
-        height: 45px;       
+        height: 45px;
 
         border: 1px solid #D5D5D5;
         border-radius: 5px;
@@ -30,7 +30,7 @@ export default styled.div`
             font-size: 15px;
         }
     }
-    
+
     div {
         display: flex;
         justify-content: flex-start;
@@ -39,17 +39,17 @@ export default styled.div`
         gap: 5px;
 
         width: 90%;
-    }    
+    }
 
     .actions {
         justify-content: flex-end;
     }
 
-    .actions>button {     
+    .actions>button {
         display: flex;
         justify-content: center;
         align-items: center;
-        
+
         width: 90px;
         height: 35px;
         border-radius: 5px;

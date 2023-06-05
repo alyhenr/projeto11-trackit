@@ -89,7 +89,7 @@ const Header = () => {
                     alt="user-picture"
                     id="profile-pic"
                     onClick={() => setDisplayMenu(display => !display)}
-                    className={displayMenu && 'clicked'}
+                    className={displayMenu ? 'clicked' : ''}
                 />
                 {displayMenu && <div className='menu'>
                     <h5 onClick={() => {
@@ -99,7 +99,7 @@ const Header = () => {
                 </div>}
             </div>
         </SCWrapper>
-    )
+    );
 };
 
 export default Header;

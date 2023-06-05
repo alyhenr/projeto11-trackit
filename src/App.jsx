@@ -19,8 +19,7 @@ const App = () => {
       setUserInfo(JSON.parse(loggedUser));
       //Check if the user was alreay logged in and redirect to /hoje page
       if (loggedUser.token
-        && (window.location.pathname === "/" || window.location.pathname === "/cadastro"
-          || window.location.pathname === "/hoje")) {
+        && (window.location.pathname === "/" || window.location.pathname === "/cadastro")) {
         navigate('/hoje');
       }
     } else if (window.location.pathname !== "/" && window.location.pathname !== "/cadastro") { navigate("/") }
@@ -39,7 +38,7 @@ const App = () => {
         </Routes>
       </DataContext.Provider>
     </>
-  )
-}
+  );
+};
 
 export default App;

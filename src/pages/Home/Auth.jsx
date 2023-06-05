@@ -37,7 +37,7 @@ const Auth = () => {
                 onClick={() => setIsLogin(prevState => !prevState)}
             >{isLogin ? "Não tem uma conta? Cadastre-se!" : "Já tem uma conta? Faça login!"}</Link>
         </SCWrapper>
-    )
-}
+    );
+};
 
 export default Auth;

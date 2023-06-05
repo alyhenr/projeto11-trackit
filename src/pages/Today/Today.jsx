@@ -26,33 +26,33 @@ const SCToday = styled.div`
         justify-content: center;
         gap: 10px;
 
-        
+
         h2 {
             font-size: 24px;
             color: #126BA5;
         }
 
         h4 {
-            font-size: 18px;            
+            font-size: 18px;
         }
     }
 
     .habits__list {
         list-style-type: none;
-        
+
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
         gap: 10px;
-        
+
         margin-top: 30px;
         width: 100%;
-        
+
         li {
             width: 100%;
             height: 100px;
-            
+
             position: relative;
 
             padding: 10px 10px;
@@ -64,13 +64,13 @@ const SCToday = styled.div`
             color: #666666;
         }
 
-        h3 {            
+        h3 {
             font-size: 20px;
             font-weight: 500;
             margin-bottom: 10px;
         }
 
-        h5 {            
+        h5 {
             font-size: 16px;
         }
 
@@ -87,7 +87,7 @@ const SCToday = styled.div`
 
             width: 70px;
             height: 70px;
-            
+
             border-radius: 10px;
             background-color: #EBEBEB;
             border: none;
@@ -98,7 +98,7 @@ const SCToday = styled.div`
         .done {
             background: #8FC549;
         }
-        
+
         h1 {
             margin-top: 100px;
             font-size: 26px;
@@ -176,7 +176,7 @@ const Today = () => {
                                         style={{
                                             color: `${habit.highestSequence > 0
                                                 && habit.highestSequence === habit.currentSequence
-                                                ? "#8FC549" : "#grey"}`
+                                                ? "#8FC549" : "#666666"}`
                                         }}>{habit.highestSequence} {habit.highestSequence > 1 ? "dias" : "dia"}</span>
                                 </h5>
                                 <button
@@ -194,7 +194,7 @@ const Today = () => {
                 <Footer />
             </BodyWrapper>
         </>
-    )
-}
+    );
+};
 
-export default Today
+export default Today;

@@ -21,7 +21,7 @@ const HabitsWrapper = ({ children }) => {
                 headers: {
                     "Authorization": `Bearer ${userInfo.token}`,
                 }
-            }).then(res => { setHabits(res.data) })
+            }).then(res => { setHabits(res.data); })
                 .catch(err => console.log(err));
 
             //Today habits list
@@ -39,11 +39,11 @@ const HabitsWrapper = ({ children }) => {
 
     return <HabitsContext.Provider value={{ habits, setHabits, todayHabits, doneHabits }}>
         {children}
-    </HabitsContext.Provider>
+    </HabitsContext.Provider>;
 };
 
 HabitsWrapper.propTypes = {
     children: PropTypes.object,
-}
+};
 
 export default HabitsWrapper;
